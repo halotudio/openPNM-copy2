@@ -66,13 +66,18 @@ class Comsol(GenericIO):
             logger.exception('Cannot export a "0D" network into a Comsol file')
 
         if dimension in ['2D', '2d']:
-            # Compute the rotation angle of throats
+            # compute the rotation angle of throats
             try:
                 dif_x = p2[:, dim[0]]-p1[:, dim[0]]
                 dif_y = p2[:, dim[1]]-p1[:, dim[1]]
+            # handle 1D cases
             except IndexError:
-                dif_x = p2[:, dim[0]]-p1[:, dim[0]]
-                dif_y = p2[:, dim[0]-1]-p1[:, dim[0]-1]
+                if dim[0] == 0:
+                    dif_x = p2[:, dim[0]]-p1[:, dim[0]]
+                    dif_y = p2[:, dim[0]+1]-p1[:, dim[0]+1]
+                else:
+                    dif_x = p2[:, dim[0]-1]-p1[:, dim[0]-1]
+                    dif_y = p2[:, dim[0]]-p1[:, dim[0]]
             # Avoid division by 0
             m = np.array([dif_x_i != 0 for dif_x_i in dif_x])
             r = np.zeros((len(dif_x)))
