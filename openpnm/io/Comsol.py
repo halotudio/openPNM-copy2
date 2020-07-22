@@ -54,10 +54,13 @@ class Comsol(GenericIO):
         dim = np.where(~dim)[0]
         actual_dim = str(len(dim))+'D'
 
-        if actual_dim == '3D' and dimension == '2D':
-            logger.error('Cannot export a 3D network into a' + 
+        if dimension not in ['2D', '3D', '2d', '3d']:
+            logger.warning('Supported "dimension" is either "2D" or "3D"')
+            dimension = '3D'
+
+        if actual_dim in ['3D', '3d'] and dimension in ['2D', '2d']:
+            logger.error('Cannot export a 3D network into a' +
                          dimension + 'Comsol file')
-            print('OK')
 
         # Compute the rotation angle of throats
         dif_x = p2[:, 0]-p1[:, 0]
