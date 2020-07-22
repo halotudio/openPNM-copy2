@@ -602,8 +602,8 @@ class Project(list):
         if filetype.lower() == 'mat':
             openpnm.io.MAT.save(network=network, phases=phases,
                                 filename=filename)
-        if filetype == 'COMSOL':
-            openpnm.io.COMSOL.save(network=network, phases=phases,
+        if filetype == 'Comsol':
+            openpnm.io.Comsol.save(network=network, phases=phases,
                                    filename=filename)
 
     def _dump_data(self, mode=['props']):
