@@ -1,5 +1,7 @@
 import numpy as np
 from openpnm.io import GenericIO
+from openpnm.utils import logging
+logger = logging.getLogger(__name__)
 
 
 class Comsol(GenericIO):
@@ -14,7 +16,7 @@ class Comsol(GenericIO):
 
     """
     @classmethod
-    def save(cls, network, phases=[], filename=''):
+    def save(cls, network, phases=[], filename='', dimension=''):
         r"""
         Saves the network and geometry data from the given objects into the
         specified file. This exports in 2D only where throats and pores have
@@ -45,6 +47,17 @@ class Comsol(GenericIO):
 
         p1 = network['pore.coords'][cn[:, 0]]
         p2 = network['pore.coords'][cn[:, 1]]
+
+        # check network's dimenesion (1D, 2D or 3D)
+        p = network['pore.coords']
+        dim = np.all(p == p[0, :], axis=0)
+        dim = np.where(~dim)[0]
+        actual_dim = str(len(dim))+'D'
+
+        if actual_dim == '3D' and dimension == '2D':
+            logger.error('Cannot export a 3D network into a' + 
+                         dimension + 'Comsol file')
+            print('OK')
 
         # Compute the rotation angle of throats
         dif_x = p2[:, 0]-p1[:, 0]
