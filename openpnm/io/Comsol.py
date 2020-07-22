@@ -62,24 +62,25 @@ class Comsol(GenericIO):
             logger.error('Cannot export a 3D network into a' +
                          dimension + 'Comsol file')
 
-        # Compute the rotation angle of throats
-        dif_x = p2[:, 0]-p1[:, 0]
-        dif_y = p2[:, 1]-p1[:, 1]
-        # Avoid division by 0
-        m = np.array([dif_x_i != 0 for dif_x_i in dif_x])
-        r = np.zeros((len(dif_x)))
-        r[~m] = np.inf
-        r[m] = dif_y[m]/dif_x[m]
-        angles = np.arctan(r)
+        if dimension in ['2D', '2d']:
+            # Compute the rotation angle of throats
+            dif_x = p2[:, 0]-p1[:, 0]
+            dif_y = p2[:, 1]-p1[:, 1]
+            # Avoid division by 0
+            m = np.array([dif_x_i != 0 for dif_x_i in dif_x])
+            r = np.zeros((len(dif_x)))
+            r[~m] = np.inf
+            r[m] = dif_y[m]/dif_x[m]
+            angles = np.arctan(r)
 
-        r_w = network['throat.diameter']
-        rectangles(file=f, pores1=p1, pores2=p2, alphas=angles, widths=r_w)
+            r_w = network['throat.diameter']
+            rectangles(file=f, pores1=p1, pores2=p2, alphas=angles, widths=r_w)
 
-        c_c = network['pore.coords']
-        c_r = network['pore.diameter']/2.0
-        circles(file=f, centers=c_c, radii=c_r)
+            c_c = network['pore.coords']
+            c_r = network['pore.diameter']/2.0
+            circles(file=f, centers=c_c, radii=c_r)
 
-        f.close()
+            f.close()
 
 
 def header(file, Nr, Nc):
