@@ -530,7 +530,7 @@ class Project(list):
         """
         raise NotImplementedError('Use the io module to import data')
 
-    def export_data(self, phases=[], filename=None, filetype='vtp'):
+    def export_data(self, phases=[], filename=None, filetype='vtp', **kwargs):
         r"""
         Export the pore and throat data from the given object(s) into the
         specified file and format.
@@ -603,8 +603,13 @@ class Project(list):
             openpnm.io.MAT.save(network=network, phases=phases,
                                 filename=filename)
         if filetype == 'Comsol':
-            openpnm.io.Comsol.save(network=network, phases=phases,
-                                   filename=filename)
+            try:
+                openpnm.io.Comsol.save(network=network, phases=phases,
+                                       filename=filename,
+                                       dimension=kwargs['dimension'])
+            except KeyError:
+                openpnm.io.Comsol.save(network=network, phases=phases,
+                                       filename=filename)
 
     def _dump_data(self, mode=['props']):
         r"""
