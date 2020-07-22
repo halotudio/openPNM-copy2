@@ -2,7 +2,7 @@ import numpy as np
 from openpnm.io import GenericIO
 
 
-class COMSOL(GenericIO):
+class Comsol(GenericIO):
     r"""
     Writes files containing pores and throats of the considered network in a
     COMSOL object format.
