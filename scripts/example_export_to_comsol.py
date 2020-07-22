@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(1, '/home/mehrez/Desktop/repositories/OpenPNM/')
 import openpnm as op
 import numpy as np
 
@@ -20,5 +18,4 @@ geo = op.geometry.StickAndBall(network=net,
 phase = op.phases.Water(network=net)
 
 # output results
-# proj.export_data(phases=[phase], filename='OUT', filetype='XDMF')
-proj.export_data(filename='comsol_test', filetype='Comsol')
+proj.export_data(filename='comsol_test', filetype='Comsol', dimension='2D')
