@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(1, '/home/mehrez/Desktop/repositories/OpenPNM/')
 import openpnm as op
 import numpy as np
 
@@ -14,8 +16,8 @@ geo = op.geometry.StickAndBall(network=net,
                                pores=net.Ps,
                                throats=net.Ts)
 
-# phase
-phase = op.phases.Water(network=net)
+# output network into a 2D Comsol file (network has to be a single layer!)
+proj.export_data(filename='net_comsol_2d', filetype='Comsol', dimension='2D')
 
-# output results
-proj.export_data(filename='comsol_test', filetype='Comsol', dimension='2D')
+# output network into a 3D Comsol file
+proj.export_data(filename='net_comsol_3d', filetype='Comsol', dimension='3D')
