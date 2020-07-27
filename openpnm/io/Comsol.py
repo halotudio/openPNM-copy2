@@ -1710,3 +1710,79 @@ def spheres(file, centers, radii):
         f.write('0 # nof attributes' + ' ' + '\n')
 
     return
+
+
+def cylinders(file, centers, radii):
+
+    f = file
+
+    p1x = centers[:, 0]-radii
+    p1y = centers[:, 1]
+    p1z = centers[:, 2]
+    p2x = centers[:, 0]
+    p2y = centers[:, 1]-radii
+    p2z = centers[:, 2]
+    p3x = centers[:, 0]
+    p3y = centers[:, 1]
+    p3z = centers[:, 2]-radii
+    p4x = centers[:, 0]
+    p4y = centers[:, 1]
+    p4z = centers[:, 2]+radii
+    p5x = centers[:, 0]
+    p5y = centers[:, 1]+radii
+    p5z = centers[:, 2]
+    p6x = centers[:, 0]+radii
+    p6y = centers[:, 1]
+    p6z = centers[:, 2]
+
+    p7x = centers[:, 0]+radii
+    p7y = centers[:, 1]
+    p7z = centers[:, 2]
+
+    p8x = centers[:, 0]+radii
+    p8y = centers[:, 1]
+    p8z = centers[:, 2]
+
+#0 -20 0 -1 NAN 
+#0 0 -20 -1 NAN 
+#0 0 20 -1 NAN 
+#0 20 0 -1 NAN 
+#
+#80 -20 0 -1 NAN 
+#80 0 -20 -1 NAN 
+#80 0 20 -1 NAN 
+#80 20 0 -1 NAN 
+
+    for c in range(len(centers)):
+        f.write('# --------- Object' + ' ' + str(c+1) + ' ' +
+                '----------' + ' ' + '\n')
+
+        f.write('0 0 1' + ' ' + '\n')
+        f.write('5 Geom3 # class' + ' ' + '\n')
+        f.write('2 # version' + ' ' + '\n')
+        f.write('3 # type' + ' ' + '\n')
+        f.write('1 # voidsLabeled' + ' ' + '\n')
+        f.write('1e-010 # gtol' + ' ' + '\n')
+        f.write('0.0001 # resTol' + ' ' + '\n')
+        f.write('8 # number of vertices' + ' ' + '\n')
+        f.write('# Vertices' + ' ' + '\n')
+        f.write('# X Y Z dom tol' + ' ' + '\n')
+
+        f.write(str(p1x[c]) + ' ' + str(p1y[c]) + ' ' + str(p1z[c]) +
+                ' ' + '-1 NAN' + ' ' + '\n')
+        f.write(str(p2x[c]) + ' ' + str(p2y[c]) + ' ' + str(p2z[c]) +
+                ' ' + '-1 NAN' + ' ' + '\n')
+        f.write(str(p3x[c]) + ' ' + str(p3y[c]) + ' ' + str(p3z[c]) +
+                ' ' + '-1 NAN' + ' ' + '\n')
+        f.write(str(p4x[c]) + ' ' + str(p4y[c]) + ' ' + str(p4z[c]) +
+                ' ' + '-1 NAN' + ' ' + '\n')
+        f.write(str(p5x[c]) + ' ' + str(p5y[c]) + ' ' + str(p5z[c]) +
+                ' ' + '-1 NAN' + ' ' + '\n')
+        f.write(str(p6x[c]) + ' ' + str(p6y[c]) + ' ' + str(p6z[c]) +
+                ' ' + '-1 NAN' + ' ' + '\n')
+        f.write(str(p7x[c]) + ' ' + str(p7y[c]) + ' ' + str(p7z[c]) +
+                ' ' + '-1 NAN' + ' ' + '\n')
+        f.write(str(p8x[c]) + ' ' + str(p8y[c]) + ' ' + str(p8z[c]) +
+                ' ' + '-1 NAN' + ' ' + '\n')
+
+    return
